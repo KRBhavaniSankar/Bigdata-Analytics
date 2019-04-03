@@ -29,12 +29,9 @@ object AIEventLogData extends App {
   })
 
   val finalS3Path = tempS3Path.mkString(",")
-  val docomoCollectionS3Path = s"${s3Path}/${collectionBucket}/{${finalS3Path}}"
-  println(docomoCollectionS3Path)
-
+  val collectionS3Path = s"${s3Path}/${collectionBucket}/{${finalS3Path}}"
   val spark = SparkSession.builder()
     .appName(s"Copy Data : ${args.mkString(", ")}")
-    //.config("spark.hadoop.io.compression.codecs", "com.asurion.codec.GzipLoadCodec")
     .getOrCreate()
 
   spark.sparkContext.setLogLevel("ERROR")
@@ -47,7 +44,7 @@ object AIEventLogData extends App {
     .option("header","false")
     .option("inferSchema","true")
     .option("timestampFormat","yyyy/MM/dd HH:mm:ss")
-    .csv(docomoCollectionS3Path)
+    .csv(collectionS3Path)
     .distinct()
 
   aiEventDf.write.parquet(outputPath)
