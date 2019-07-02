@@ -3,8 +3,6 @@ package com.bhavani.asurion
 import org.apache.spark.sql.SparkSession
 import org.joda.time.Months
 import org.joda.time.format.DateTimeFormat
-import org.apache.spark.sql.functions.split
-
 object MonthWiseAppUseLiteracyCount extends App {
 
   val spark = SparkSession.builder()
@@ -18,43 +16,57 @@ object MonthWiseAppUseLiteracyCount extends App {
 
 
 
-  val path = s"/18_month_wise_app_users_count/month_wise_s3_data"
+  val appUsePath = s"18_month_wise_app_users_count/month_wise_s3_data"
+  val kjUsersPath = s"18_month_wise_app_users_count/KJ_month_wise_unique_users"
 
   val startMonth= "201705"
-  val endMonth="201905"
+  val endMonth="201902"
 
   val originalFormat = DateTimeFormat.forPattern("yyyyMM")
   val newStartDate = originalFormat.parseDateTime(startMonth)
   val newEndDate= originalFormat.parseDateTime(endMonth)
 
-  //println(newStartDate + "\n" +newEndDate)
 
   val durationMonths = Months.monthsBetween(newStartDate,newEndDate).getMonths()
-  //println(durationMonths)
 
   val monthsCounts = (0 to durationMonths).map(month => {
 
     val currentMonth = newStartDate.plusMonths(month)
     val currentMonthStr = currentMonth.toString("yyyy-MM")
-    val currentMonthPath = s"${path}/${currentMonthStr}/"
-    //println(currentMonthPath)
-    val df = spark.read.parquet(currentMonthPath)
+    val currentMonthAppUsersPath = s"${appUsePath}/${currentMonthStr}/"
+    val currentMonthKJUsersPath = s"${kjUsersPath}/ym=${currentMonthStr}"
+    val appUsersDF = spark.read.parquet(currentMonthAppUsersPath).distinct()
+    val kjUsersDF = spark.read.option("header","true").csv(currentMonthKJUsersPath).distinct()
+
+    val commonUsers = appUsersDF.join(kjUsersDF,appUsersDF("imei")===kjUsersDF("アカウント識別子"),"inner")
+      //.drop("imei")
+      .distinct()
+    //println(currentMonthStr)
+    //commonUsers.show(10,false)
+
+
+    println(s"${currentMonthStr}\t${appUsersDF.count()}\t${kjUsersDF.count()}\t${commonUsers.count()}")
+
+    //println(currentMonthAppUsersPath+"\n"+currentMonthKJUsersPath)
+
+
     //println(s"${currentMonthStr},${df.count()}")
-    s"${currentMonthStr},${df.count()}"
+    //s"${currentMonthStr},${appUsersDF.count()}"
+    //s"${currentMonthStr}\t${appUsersDF.count()}\t${kjUsersDF.count()}\t${commonUsers.count()}"
 
     })
 
   val monthResRDD = spark.sparkContext.parallelize(monthsCounts)
-  //println(monthResRDD)
-  //println(monthResRDD.count())
-  //monthResRDD.foreach(println(_))
 
 
+/*
   val monthsResDF = monthResRDD.toDF()
-      .withColumn("month",split($"value",",").getItem(0))
-      .withColumn("count",split($"value",",").getItem(1))
+      .withColumn("year-month",split($"value","\t").getItem(0))
+      .withColumn("app_use_unique_users_count",split($"value","\t").getItem(1))
+      .withColumn("kj_users_unique_count",split($"value","\t").getItem(2))
+      .withColumn("common_users_count",split($"value","\t").getItem(3))
       .drop($"value")
   monthsResDF.show(false)
-  monthsResDF.printSchema()
+  monthsResDF.printSchema()*/
 
 }
