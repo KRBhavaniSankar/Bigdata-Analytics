@@ -20,7 +20,10 @@ public class WordCountJob {
 
 		job.setMapperClass(MapperPhase.class);
 		job.setReducerClass(ReducerPhase.class);
+		job.setCombinerClass(Combiner.class);
 
+		job.setNumReduceTasks(3);
+		job.setPartitionerClass(WordPartitioner.class);
 			
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
