@@ -1,0 +1,28 @@
+1.  Download latest kafka version from the link https://www.apache.org/dyn/closer.cgi?path=/kafka/2.3.0/kafka_2.11-2.3.0.tgz
+
+2.  Move downloaded binaries from Downloads to your working folder
+
+3.  untar tgz file using below command
+    $tar -xvf kafka_2.11-2.3.0.tgz
+4.  Update ~/.bash_profile with kafka folder location and add it in PATH.  Make sure you compile the updated ~/.bash_profile with source command.
+
+5.  Move to Kafka folder and start ZOOKEEPER using below command 
+    $zookeeper-server-start.sh ./config/zookeeper.properties
+
+
+6.  Start KAFKA server by using below command 
+    $kafka-server-start.sh ./config/server.properties
+
+7.  Create Kafka TOPIC using below command
+    $kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+
+8.  Start KAFKA consumer and receive streming messages using below command
+    $kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+
+9.  Stop KAFKA server using below command
+    $kafka-server-stop.sh ./config/server.properties
+
+10.  Stop ZOOKEEPER using below command
+    $zookeeper-server-stop.sh ./config/zookeeper.properties
+
+
