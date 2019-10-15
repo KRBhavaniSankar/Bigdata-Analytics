@@ -1,0 +1,26 @@
+Following step by step are zeppelin installation on MAC machine.
+
+1.  Install latest version of zeppelin using follwing command.  This will gonna download into /usr/local/Cellar/folder 
+	brew install apache-zeppelin
+
+2.  Set following environment variables
+	export ZEPPELIN_HOME=/usr/local/Cellar/apache-zeppelin/0.8.2/libexec
+	export ZEPPELIN_CONF_DIR=$ZEPPELIN_HOME/conf
+	export PATH=$ZEPPELIN_HOME/bin:$PATH
+
+3.  Create the copy of zeppelin-env.sh.template and name it to zeppelin-env.sh and set follwing parameters
+	export ZEPPELIN_JAVA_OPTS="-Dspark.executor.memory=4g"
+	export SPARK_HOME=/usr/local/Cellar/apache-spark/2.2.1
+	export SPARK_CONF_DIR=/usr/local/Cellar/apache-spark/2.2.1/conf
+	export SPARK_SUBMIT_OPTIONS="--driver-memory 4G --executor-memory 2G --num-executors 3"
+	export HADOOP_CONF_DIR=/usr/local/Cellar/hadoop/2.7.6/etc/hadoop
+
+4.  Create a copy of zeppelin-site.xml.template and name it to zeppelin-site.xml and set following parameters
+	zeppelin.server.port to 8890 ( or any 4 digit port number)
+	zeppelin.notebook.dir to $HOME/Desktop/ ( or to any folder)
+
+5.  Start,check Status, Restart and Stop zeppelin server using following commands.
+	$ZEPPELIN_HOME/bin/zeppelin-daemon.sh start
+	$ZEPPELIN_HOME/bin/zeppelin-daemon.sh status
+	$ZEPPELIN_HOME/bin/zeppelin-daemon.sh restart
+	$ZEPPELIN_HOME/bin/zeppelin-daemon.sh stop
