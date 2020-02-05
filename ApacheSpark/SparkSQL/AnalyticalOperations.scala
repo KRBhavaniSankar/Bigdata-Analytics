@@ -6,7 +6,7 @@ import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.types.IntegerType
 
 
-object TOKAppUseFeatureGen20200122 extends App {
+object AnalyticalOperations extends App {
 
   val appResLogs = args(0)
   val newTOKPath = args(1)
