@@ -1,0 +1,4 @@
+v1
+{"path":"file:///Users/bhavanisankar/work/Bigdata-Analytics/ApacheSpark/StrcturedStreaming/NetworkWordCount/output/part-00000-568ced57-725d-4a03-8813-f2a81701c761-c000.json","size":2165564,"isDir":false,"modificationTime":1710081420433,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///Users/bhavanisankar/work/Bigdata-Analytics/ApacheSpark/StrcturedStreaming/NetworkWordCount/output/part-00001-3c685b67-cdb8-4ff8-9f3f-4bca44e91ccf-c000.json","size":2165564,"isDir":false,"modificationTime":1710081420428,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///Users/bhavanisankar/work/Bigdata-Analytics/ApacheSpark/StrcturedStreaming/NetworkWordCount/output/part-00002-c445e960-57e2-4ea4-954e-f6df8e7433f4-c000.json","size":2165564,"isDir":false,"modificationTime":1710081420423,"blockReplication":1,"blockSize":33554432,"action":"add"}
