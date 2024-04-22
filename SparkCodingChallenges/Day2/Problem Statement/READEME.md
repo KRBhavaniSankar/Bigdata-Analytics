@@ -5,4 +5,4 @@ Given a dataset containing information about students, perform the following tas
 
 ### 2. Load the dataset into a DataFrame.
 
-### 3. Find students with Age more than 20 with Garde A.
+### 3. Find student name and gender with Age greater than 20 with Garde A.

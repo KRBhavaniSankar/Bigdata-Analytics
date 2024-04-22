@@ -1,0 +1,16 @@
+id,name,department,gender,salary
+1,Dakonat,sales,male,1900
+2,Alice,IT,female,2100
+3,Gajantut,IT,male,1600
+4,Rifat,IT,female,782
+5,Tupur,IT,male,1370
+6,Alice,sales,male,1500
+7,Bob,sales,male,1000
+8,David,sales,male,800
+9,Charlie,manager,male,1200
+10,James,manager,male,1900
+11,Alex,manager,male,1200
+12,Santa,HR,female,1500
+13,Shanti,HR,female,1100
+14,Dakonat,HR,male,1000
+15,Eli,HR,female,1100
